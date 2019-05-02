@@ -1,4 +1,4 @@
-var mode = 4;
+var mode = 6;
 
 if (!String.prototype.trim) {
   (function() {
@@ -56,4 +56,37 @@ if (mode == 4) {
 	oExec = wShell.Exec("mshta.exe \"about:<input type=file id=FILE><script>FILE.click();new ActiveXObject(\'Scripting.FileSystemObject\').GetStandardStream(1).WriteLine(FILE.value);close();resizeTo(0,0);</script>\"");
 	sFileSelected = oExec.StdOut.ReadLine();
 	WScript.Echo(sFileSelected);
+}
+
+if (mode == 5) {
+	var dickPic = "1486194387_1.jpg, 1486194387_2.jpg, 1486194387_3.jpg, 1486194387_4.jpg, 1486194387_5.jpg, 1486194387_6.jpg, 1486194387_7.jpg";
+	str = "1486194387";
+	regexp = ""+ str + "_[0-9].jpg";
+	regexp = new RegExp(regexp);
+	
+	//arr = dickPic.match(regexp);
+	arr = regexp.exec(dickPic);
+	if (arr == null) {
+		WScript.Echo("Arr is null");
+	} else {
+		for (var i = 0; i < arr.length; i++)
+			WScript.Echo(arr[i]);
+	}
+}
+
+if (mode == 6) {
+	var dickPic = "1486194387_1.jpg, 1486194387_2.jpg, 1486194387_3.jpg, 1486194387_4.jpg, 1486194387_5.jpg, 1486194387_6.jpg, 1486194387_7.jpg";
+	picArr = dickPic.split(",");
+	str = "1486194387";
+	regexp = ""+ str + "_[0-9].jpg";
+	regexp = new RegExp(regexp, 'y');
+	
+	//arr = dickPic.match(regexp);
+	arr = regexp.exec(dickPic);
+	if (arr == null) {
+		WScript.Echo("Arr is null");
+	} else {
+		for (var i = 0; i < arr.length; i++)
+			WScript.Echo(arr[i]);
+	}
 }
