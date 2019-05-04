@@ -49,11 +49,11 @@ function main() {
 		
 		//WScript.Echo("ad number \"" + adNumber + "\"");
 		
-		for (var i = 1; i < 12; i++) {
+		for (var i = 1; i < 10; i++) {
 			regstr = "https://i.ibb.co/[\\w]{7}/" + adNumber + "-" + i + ".jpg";
 			longNameArr = picsFile.match(regstr);
-			if (longNameArr != null) 
-				result = "" + result + "###" + longNameArr[0];
+			if (longNameArr == null) break;
+			result = "" + result + "###" + longNameArr[0];
 		}
 		
 		//WScript.Echo("result \"" + result + "\"");
