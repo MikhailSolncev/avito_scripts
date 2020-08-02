@@ -21,7 +21,6 @@ function prepare() {
 	textFileName = chooseFile();
 	fileObject = objFS.OpenTextFile(textFileName);
 	while (!fileObject.AtEndOfStream) {
-		//picsFile += fileObject.ReadLine() + ",";
 		picsFile += fileObject.ReadLine();
 	}
 	fileObject.Close();
@@ -39,24 +38,18 @@ function main() {
 	
 	var sheet = book.Worksheets.Item(1);
 
-	//picsArr = picsFile.split(",");
-	
 	for (var row = 2; row <= sheet.UsedRange.Rows.Count; row++){
 		adNumber = sheet.Range("H" + row).Value;
-		//namesArr = picsString.split(",");
-		
 		result = "";
 		
-		//WScript.Echo("ad number \"" + adNumber + "\"");
-		
 		for (var i = 1; i < 12; i++) {
-			regstr = "https://i.ibb.co/[\\w]{7}/" + adNumber + "-" + i + ".jpg";
+			//regstr = "https://i.ibb.co/[\\w]{7}/" + adNumber + "-" + i + ".jpg";
+			regstr = "http://ipic.su/img/img4/fs/" + adNumber + "_" + i + ".[0-9]{1,}.jpg";
 			longNameArr = picsFile.match(regstr);
 			if (longNameArr != null) 
 				result = "" + result + "###" + longNameArr[0];
 		}
 		
-		//WScript.Echo("result \"" + result + "\"");
 		result = result.substr(3);
 		for (var i = 0; i<10; i++)
 			result = result.replace("###", ", ");

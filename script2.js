@@ -1,4 +1,4 @@
-var mode = 6;
+var mode = 7;
 
 if (!String.prototype.trim) {
   (function() {
@@ -64,29 +64,58 @@ if (mode == 5) {
 	regexp = ""+ str + "_[0-9].jpg";
 	regexp = new RegExp(regexp);
 	
-	//arr = dickPic.match(regexp);
-	arr = regexp.exec(dickPic);
+	arr = dickPic.match(regexp);
+	//arr = regexp.exec(dickPic);
 	if (arr == null) {
 		WScript.Echo("Arr is null");
 	} else {
+		WScript.Echo("Количество совпадений ", arr.length);
 		for (var i = 0; i < arr.length; i++)
 			WScript.Echo(arr[i]);
 	}
 }
 
 if (mode == 6) {
-	var dickPic = "1486194387_1.jpg, 1486194387_2.jpg, 1486194387_3.jpg, 1486194387_4.jpg, 1486194387_5.jpg, 1486194387_6.jpg, 1486194387_7.jpg";
+	var dickPic = "1486194387_а.jpg, 1486194387_2.jpg, 1486194387_3.jpg, 1486194387_4.jpg, 1486194387_5.jpg, 1486194387_6.jpg, 1486194387_7.jpg";
 	picArr = dickPic.split(",");
 	str = "1486194387";
-	regexp = ""+ str + "_[0-9].jpg";
-	regexp = new RegExp(regexp, 'y');
+	regexp = "[0-9]*_[0-9].jpg";
+	//regexp = new RegExp(regexp, "y");
+	regexp = new RegExp(regexp);
+	
+	arr = dickPic.matchAll(regexp);
+	//arr = regexp.exec(dickPic);
+	if (arr == null) {
+		WScript.Echo("Arr is null");
+	} else {
+		WScript.Echo("Количество совпадений ", arr.length);
+		for (var i = 0; i < arr.length; i++)
+			WScript.Echo(arr[i]);
+	}
+}
+
+if (mode == 7) {
+	var dickPic = "1486194387_а.jpg, 1486194387_2.jpg, 1486194387_3.jpg, 1486194387_4.jpg, 1486194387_5.jpg, 1486194387_6.jpg, 1486194387_7.jpg";
+	pattern = "[0-9]{7-13}_[0-9]{1,2}.jpg";
+	pattern = "[0-9]{6,}_[0-9]{1,}.jpg";
+	
+	regexp = new RegExp;
+	regexp.global = true;
+	regexp.pattern = pattern;
+	regexp = new RegExp(pattern);
 	
 	//arr = dickPic.match(regexp);
 	arr = regexp.exec(dickPic);
 	if (arr == null) {
 		WScript.Echo("Arr is null");
 	} else {
-		for (var i = 0; i < arr.length; i++)
-			WScript.Echo(arr[i]);
+		while (arr != null) {
+		
+		//WScript.Echo("Количество совпадений ", arr.length);
+			for (var i = 0; i < arr.length; i++)
+				WScript.Echo(arr[i]);
+			
+			arr = regexp.exec(dickPic)
+		}
 	}
 }
