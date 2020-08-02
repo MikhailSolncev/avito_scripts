@@ -51,13 +51,33 @@ function main() {
 
 function getLinksFromLine(linksString) {
     links = [];
+    if (linksString == undefined)
+        return links;
+        
     linksArray = linksString.split(", ");     //  ÂÎÒ ÇÄÅÑÜ ÍÓÆÍÎ ÇÀÄÀÒÜ ×ÅÌ ĞÀÇÄÅËÅÍÛ ÑÑÛËÊÈ - ÇÀÏßÒÛÌÈ, ÒÎ×ÊÀÌÈ ÈËÈ ÒÎ×ÊÀÌÈ Ñ ÇÀÏßÒÎÉ
     for (var index = 0; index < linksArray.length; index ++) {
-        link = linksArray[index];
+        link = trim(linksArray[index]);
         if (link.length > 0) links.push(link);
     }
     //WScript.Echo("Êîëè÷åñòâî ññûëîê: " + links.length)
     return links;
+}
+
+function trim(input) {
+    result = input;
+
+    index = result.indexOf(" ", 0);
+    while (index > -1) {
+        if (index == 0) {
+            result = result.substr(1);
+        } else if (index < result.length - 1) {
+            result = result.substr(0, index).concat(result.substr(index + 1));
+        } else if (index == result.length - 1) {
+            result = result.substr(0, result.length - 1);
+        }
+        index = result.indexOf(" ", 0);
+    }
+    return result;
 }
 
 function downloadLinks(adNumber, links) {
@@ -67,6 +87,8 @@ function downloadLinks(adNumber, links) {
     for (var index = 0; index < links.length; index ++) {
         arr = [adNumber, index + 1];
         fileName = arr.join(fileDelimeter);
+        link = links[index];
+        WScript.Echo("Link: \"" + link + "\"");
         HTTPFileGet(link, folder + fileName + ".jpg");
     }
 }
