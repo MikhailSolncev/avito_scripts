@@ -39,25 +39,34 @@ function main() {
     columnNumber = "H";     //  йнкнмйю я мнлепнл назъбкемхъ
 
     for (var row = 2; row <= excelSheet.UsedRange.Rows.Count; row++){
+        linksString = excelSheet.Range(columnFiles + row).Value;
+        links = getLinksFromLine(linksString)
+
         adNumber = excelSheet.Range(columnNumber + row).Value;
-        links = excelSheet.Range(columnFiles + row).Value;
-        downloadLine(adNumber, links);
+        downloadLinks(adNumber, links);
     }
 
     WScript.Echo("гЮЦПСГЙЮ ЙЮПРХМНЙ ГЮЙНМВХКЮЯЭ!");
 }
 
-function downloadLine(adNumber, links) {
+function getLinksFromLine(linksString) {
+    links = [];
+    linksArray = linksString.split(", ");     //  бнр гдеяэ мсфмн гюдюрэ вел пюгдекемш яяшкйх - гюоършлх, рнвйюлх хкх рнвйюлх я гюоърни
+    for (var index = 0; index < linksArray.length; index ++) {
+        link = linksArray[index];
+        if (link.length > 0) links.push(link);
+    }
+    //WScript.Echo("йНКХВЕЯРБН ЯЯШКНЙ: " + links.length)
+    return links;
+}
+
+function downloadLinks(adNumber, links) {
     //  оюью, пюгдекхрекэ хлемх тюикю лнфмн гюдюрэ гдеяэ
     fileDelimeter = "-";    //  бнр рср лефдс йюбшвйюлх
-    linksArray = links.split(", ");     //  бнр гдеяэ мсфмн гюдюрэ вел пюгдекемш яяшкйх - рнкэйн гюоършлх, хкх гюоършлх я опнаекюлх
-
-    for (var index = 0; index < linksArray.length; index ++) {
+    
+    for (var index = 0; index < links.length; index ++) {
         arr = [adNumber, index + 1];
         fileName = arr.join(fileDelimeter);
-        //WScript.Echo("\"" + fileName + "\"");
-        link = linksArray[index];
-        //WScript.Echo("\"" + link + "\"");
         HTTPFileGet(link, folder + fileName + ".jpg");
     }
 }
